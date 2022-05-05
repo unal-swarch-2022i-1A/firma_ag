@@ -27,27 +27,27 @@ const eschema = buildSchema(`
 const root = {
     getPrivateKey: (id) => {
         const res = "";
-        let idToChart = parseInt(id, 10);
         const url = `http://keys_ms:8093/keys/${id.id}/private`;
-        console.log("id",id.id);
-        fetch(url, {
+        return fetch(url, {
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json"
             }
         })
-            .then((response) => response.json())
-            .then((responseData) => {
-                console.log(responseData);
-                return new PrivateKey(responseData.private);
-            })
+        .then(res => res.json())
+        .then(data=>{ 
+            //console.log("data",data); 
+            let privateKey = new PrivateKey(data);
+            //console.log("privateKey", privateKey);
+            return privateKey;
+        })
 
     }
 };
 
 class PrivateKey {
-    constructor(privates) {
-        this.privates = privates;
+    constructor(key) {
+        this.private = key;
     }
 }
 
