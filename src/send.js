@@ -1,8 +1,12 @@
 #!/usr/bin/env node
-
+/**
+ * Este programa Produce (envia) eñ mensaje
+ * https://www.rabbitmq.com/tutorials/tutorial-one-javascript.html
+ * 
+ */
 var amqp = require('amqplib/callback_api');
 
-amqp.connect('amqp://localhost', function(error0, connection) {
+amqp.connect('amqp://myuser:mypassword@mq', function(error0, connection) {
     if (error0) {
         throw error0;
     }
