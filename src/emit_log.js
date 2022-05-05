@@ -1,9 +1,5 @@
 #!/usr/bin/env node
-/**
- * Este programa Produce (envia) eñ mensaje
- * https://www.rabbitmq.com/tutorials/tutorial-one-javascript.html
- * 
- */
+
 var amqp = require('amqplib/callback_api');
 
 amqp.connect('amqp://myuser:mypassword@mq', function(error0, connection) {
@@ -14,17 +10,18 @@ amqp.connect('amqp://myuser:mypassword@mq', function(error0, connection) {
         if (error1) {
             throw error1;
         }
+        var exchange = 'direct_logs';
+        var args = process.argv.slice(2);
+        var msg = args.slice(1).join(' ') || 'Hello World!';
+        var severity = (args.length > 0) ? args[0] : 'info';
 
-        var queue = 'signing_ms';
-        var msg = 'Hello World!';
-
-        channel.assertQueue(queue, {
+        channel.assertExchange(exchange, 'direct', {
             durable: false
         });
-        channel.sendToQueue(queue, Buffer.from(msg));
-
-        console.log(" [x] Sent %s", msg);
+        channel.publish(exchange, severity, Buffer.from(msg));
+        console.log(" [x] Sent %s: '%s'", severity, msg);
     });
+
     setTimeout(function() {
         connection.close();
         process.exit(0);
