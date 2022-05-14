@@ -13,4 +13,4 @@ RUN npm install
 # RUN npm ci --only=production
 
 EXPOSE 8093
-CMD [ "node", "src/server.js" ]
+CMD [ "node", "src/schema.js" ]

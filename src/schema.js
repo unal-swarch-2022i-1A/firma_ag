@@ -1,9 +1,9 @@
 var fetch = require("node-fetch-commonjs");
 var express = require('express');
 const { graphqlHTTP } = require('express-graphql');
-var {buildSchema} = require('graphql');
+var { buildSchema } = require('graphql');
 const keysUrl = `http://127.0.0.1:8093/keys//private`;
-const signUrl = `http://127.0.0.1:8093/keys/`+`{id}`+`/private`;
+const signUrl = `http://127.0.0.1:8093/keys/` + `{id}` + `/private`;
 
 const eschema = buildSchema(`
     type Signature {
@@ -21,37 +21,39 @@ const eschema = buildSchema(`
     }
 `);
 const root = {
-    getPrivateKey: ( id ) => {
+    getPrivateKey: (id) => {
+        console.log("Entra al metodo");
         const res = "";
-        let idToChart = parseInt(id,10);
-        const url =`http://127.0.0.1:8093/keys/1/private`;
-        console.log(url);
-        fetch(url, {
+        const url = `http://127.0.0.1:8093/keys/1/private`;
+        return fetch(url, {
             "method": "GET",
             "headers": {
                 "Content-Type": "application/json"
-  }
+            }
         })
-        .then((response) => response.json())
-        .then((responseData) => {
-         console.log(responseData);
-        return "ntrr";
-    })
+        .then(res => res.json())
+        .then(data=>{ 
+            //console.log("data",data); 
+            let privateKey = new PrivateKey(data);
+            console.log("privateKeyObject", privateKey);
+            console.log("privateKey", privateKey.key);
+            return "sds"//privateKey.key;
+        })
 
     }
 };
 
 class PrivateKey {
-    constructor(privates) {
-        this.privates = privates;
-      }
+    constructor(key) {
+        this.private = key;
+    }
 }
 
 var app = express();
-app.use('/graphql',graphqlHTTP({
+app.use('/graphql', graphqlHTTP({
     schema: eschema,
     rootValue: root,
     graphiql: true,
 }));
 app.listen(4000);
-console.log('Runnig server at localhost:4000/graphql');
+console.log('Runnig server at localhost:80/graphql');
