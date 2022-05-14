@@ -12,12 +12,8 @@ const eschema = buildSchema(`
         data: String
     }
 
-    type PrivateKey{
-        private: String
-    }
-
     type Query {
-        getPrivateKey(id: Int): PrivateKey
+        getPrivateKey(id: Int): String
     }
 
     type Mutation {
@@ -39,7 +35,7 @@ const root = {
         .then((response) => response.json())
         .then((responseData) => {
          console.log(responseData);
-        return new PrivateKey(responseData.private);
+        return "ntrr";
     })
 
     }
