@@ -8,13 +8,23 @@ const eschema = buildSchema(`
         data: String
     }
 
+    type RestStatus {
+        httpCode: Int
+        httpMessage: String
+    }
+
     type Query {
         getPrivateKey(id: Int): String
+        getPublicKey(id: Int): String
         hello: String
     }
 
     type Mutation {
+        generateUserKeys(id: Int): RestStatus
+        reGenerateUserKeys(id: Int): RestStatus
+        deleteUserKeys(id: Int): RestStatus
         signData(data: String, userId: String): Signature
+
     }
 `);
 
