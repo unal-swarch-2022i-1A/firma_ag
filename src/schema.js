@@ -13,16 +13,40 @@ const eschema = buildSchema(`
         httpMessage: String
     }
 
+    type User {
+        userId: Int
+        firstName: String
+        lastName: String
+        email: String
+        password: String
+    }
+
+    type Document {
+        docId: Int
+        name: String
+        folder: Int
+    }
+
     type Query {
         getPrivateKey(id: Int): String
         getPublicKey(id: Int): String
         hello: String
+
+        getUser(id: Int): User
+
+        getDoc(id: Int): Document
+        
     }
 
     type Mutation {
         generateUserKeys(id: Int): RestStatus
         reGenerateUserKeys(id: Int): RestStatus
         deleteUserKeys(id: Int): RestStatus
+
+        createUser(firsName: String, lastName: String, email: String, password: String): RestStatus
+        updateUser(id, Int, firsName: String, lastName: String, email: String, password: String): User
+        deleteUser(id: Int): RestStatus
+
         signData(data: String, userId: String): Signature
 
     }
