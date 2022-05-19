@@ -43,8 +43,8 @@ const eschema = buildSchema(`
         reGenerateUserKeys(id: Int): RestStatus
         deleteUserKeys(id: Int): RestStatus
 
-        createUser(firsName: String, lastName: String, email: String, password: String): RestStatus
-        updateUser(id, Int, firsName: String, lastName: String, email: String, password: String): User
+        createUser(firstName: String, lastName: String, email: String, password: String): RestStatus
+        updateUser(id: Int, firstName: String, lastName: String, email: String, password: String): User
         deleteUser(id: Int): RestStatus
 
         signData(data: String, userId: String): Signature

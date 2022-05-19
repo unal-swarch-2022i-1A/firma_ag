@@ -17,9 +17,9 @@ class Signature{
 }
 
 class User {
-    constructor(userId, firsName, lastName, email, password) {
+    constructor(userId, firstName, lastName, email, password) {
         this.userId = userId;
-        this.firsName = firsName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;

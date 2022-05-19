@@ -77,9 +77,9 @@ const root = {
         });        
     },
 
-    signData: (signature, userId, data) => {
+    signData: (signature) => {
         const url = signEndpoint;
-        var data = {"signature": signature, "user_id": userId, "data": data}
+        var data = {"signature": signature.signature, "user_id": signature.userId, "data": signature.data}
         return fetch(url, {
             "method": "POST",
             "body": JSON.stringify(data), 
@@ -96,21 +96,20 @@ const root = {
     getUser: (id) => {
         const url = userEndpoint + `${id.id}`;
         return fetch(url, {
-            "method": "POST", 
+            "method": "GET", 
             "headers": {
                 "Content-Type": "application/json; charset=utf-8"
             }
         })
         .then(res => res.json())
         .then(data => {
-            return new entity.User(data.userId, data.firstName, data.lastName, data.email, data.passord)//?
+            return new entity.User(data.userId, data.firstName, data.lastName, data.email, data.password)//?
         }) 
     },
 
-    createUser: (firsName, lastName, email, password) => {
+    createUser: (user) => {
         const url = userEndpoint;
-        var data = {"firstName": firsName.firsName, "lastName": lastName.lastName, 
-        "data": data, "email": email.email, "password": password.passord}
+        var data = {"firstName": user.firstName, "lastName": user.lastName, "email": user.email, "password": user.password}
         return fetch(url, {
             "method": "POST",
             "body": JSON.stringify(data), 
@@ -123,10 +122,9 @@ const root = {
         });
     },
 
-    updateUser: (id,firsName, lastName, email, password) => {
-        const url = userEndpoint + `${id.id}`;
-        var data = {"firstName": firsName.firsName, "lastName": lastName.lastName, 
-        "data": data, "email": email.email, "password": password.passord}
+    updateUser: (user) => {
+        const url = userEndpoint + `${user.id}`;
+        var data = {"firstName": user.firstName, "lastName": user.lastName, "email": user.email, "password": user.password}
         return fetch(url, {
             "method": "PUT",
             "body": JSON.stringify(data), 
