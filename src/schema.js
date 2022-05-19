@@ -1,12 +1,6 @@
-var fetch = require("node-fetch-commonjs");
-var amqp = require('amqplib/callback_api');
-var express = require('express');
-const { graphqlHTTP } = require('express-graphql');
 var { buildSchema } = require('graphql');
 
-const keysUrl = `http://127.0.0.1:8093/keys//private`;
-const signUrl = `http://127.0.0.1:8093/keys/` + `{id}` + `/private`;
-
+//Construct a schema, using GraphQL schema language
 const eschema = buildSchema(`
     type Signature {
         signature: String
@@ -14,59 +8,47 @@ const eschema = buildSchema(`
         data: String
     }
 
-    type Foo {
-        bar: String
+    type RestStatus {
+        httpCode: Int
+        httpMessage: String
     }
 
-    type PrivateKey{
-        private: String
+    type User {
+        userId: Int
+        firstName: String
+        lastName: String
+        email: String
+        password: String
+    }
+
+    type Document {
+        docId: Int
+        name: String
+        folder: Int
     }
 
     type Query {
-        getPrivateKey(id: Int): PrivateKey
+        getPrivateKey(id: Int): String
+        getPublicKey(id: Int): String
+        hello: String
+
+        getUser(id: Int): User
+
+        getDoc(id: Int): Document
+        
     }
 
     type Mutation {
+        generateUserKeys(id: Int): RestStatus
+        reGenerateUserKeys(id: Int): RestStatus
+        deleteUserKeys(id: Int): RestStatus
+
+        createUser(firstName: String, lastName: String, email: String, password: String): RestStatus
+        updateUser(id: Int, firstName: String, lastName: String, email: String, password: String): User
+        deleteUser(id: Int): RestStatus
+
         signData(data: String, userId: String): Signature
     }
 `);
-const root = {
-    getPrivateKey: (id) => {
-        const res = "";
-        const url = `http://keys_ms:8093/keys/${id.id}/private`;
-        return fetch(url, {
-            "method": "GET",
-            "headers": {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                //console.log("data",data); 
-                let privateKey = new PrivateKey(data);
-                //console.log("privateKey", privateKey);
-                return privateKey;
-            })
-    }
-};
 
-class PrivateKey {
-    constructor(key) {
-        this.private = key;
-    }
-}
-
-class Foo {
-    constructor(bar) {
-        this.bar = bar;
-    }
-}
-
-var app = express();
-app.use('/graphql', graphqlHTTP({
-    schema: eschema,
-    rootValue: root,
-    graphiql: true,
-}));
-app.listen(80);
-console.log('Runnig server at localhost:80/graphql');
+exports.eschema = eschema;
