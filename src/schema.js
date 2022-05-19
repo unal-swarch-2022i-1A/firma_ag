@@ -1,7 +1,9 @@
 var fetch = require("node-fetch-commonjs");
+var amqp = require('amqplib/callback_api');
 var express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 var { buildSchema } = require('graphql');
+
 const keysUrl = `http://127.0.0.1:8093/keys//private`;
 const signUrl = `http://127.0.0.1:8093/keys/` + `{id}` + `/private`;
 
@@ -10,6 +12,10 @@ const eschema = buildSchema(`
         signature: String
         userId: String
         data: String
+    }
+
+    type Foo {
+        bar: String
     }
 
     type PrivateKey{
@@ -34,20 +40,25 @@ const root = {
                 "Content-Type": "application/json"
             }
         })
-        .then(res => res.json())
-        .then(data=>{ 
-            //console.log("data",data); 
-            let privateKey = new PrivateKey(data);
-            //console.log("privateKey", privateKey);
-            return privateKey;
-        })
-
+            .then(res => res.json())
+            .then(data => {
+                //console.log("data",data); 
+                let privateKey = new PrivateKey(data);
+                //console.log("privateKey", privateKey);
+                return privateKey;
+            })
     }
 };
 
 class PrivateKey {
     constructor(key) {
         this.private = key;
+    }
+}
+
+class Foo {
+    constructor(bar) {
+        this.bar = bar;
     }
 }
 
