@@ -1,5 +1,6 @@
 var fetch = require("node-fetch-commonjs");
 const entity = require('./classes.js')
+const FormData = require('form-data');
 // The root provides a resolver function for each API endpoint
 
 const userEndpoint = `http://127.0.0.1:8090/users/`
@@ -97,6 +98,23 @@ const root = {
         const url = userEndpoint + `${id.id}`;
         return fetch(url, {
             "method": "GET", 
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            return new entity.User(data.userId, data.firstName, data.lastName, data.email, data.password)//?
+        }) 
+    },
+
+    getUserByEmail: (email) => {
+        const url = `http://127.0.0.1:8090/users/user`;
+        console.log(url)
+        var data = {"email": email.email}
+        return fetch(url, {
+            "method": "POST", 
+            "body": JSON.stringify(data), 
             "headers": {
                 "Content-Type": "application/json; charset=utf-8"
             }

@@ -33,6 +33,7 @@ const eschema = buildSchema(`
         hello: String
 
         getUser(id: Int): User
+        getUserByEmail(email: String): User
 
         getDoc(id: Int): Document
         
