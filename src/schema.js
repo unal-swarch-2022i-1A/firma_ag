@@ -49,7 +49,6 @@ const eschema = buildSchema(`
         deleteUser(id: Int): RestStatus
 
         signData(data: String, userId: String): Signature
-
     }
 `);
 

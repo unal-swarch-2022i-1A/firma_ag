@@ -10,6 +10,12 @@ amqp.connect('amqp://myuser:mypassword@mq', function(error0, connection) {
         if (error1) {
             throw error1;
         }
+        var exchange = 'direct_logs';
+
+        channel.assertExchange(exchange, 'direct', {
+            durable: false
+        });
+
         var queue = 'signing_ms';
 
         channel.assertQueue(queue, {
@@ -29,7 +35,7 @@ amqp.connect('amqp://myuser:mypassword@mq', function(error0, connection) {
 
             var r = signData(n);
 
-            
+
 
             channel.sendToQueue(msg.properties.replyTo,
                 Buffer.from(r.toString()), {
@@ -43,8 +49,7 @@ amqp.connect('amqp://myuser:mypassword@mq', function(error0, connection) {
 
 function signData(data) {
     const json = '{"result":true, "firma":42}';
-    const obj = JSON.parse(json);    
-    return obj
+    return json
 }
 
 function fibonacci(n) {
