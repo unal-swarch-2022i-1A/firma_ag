@@ -27,10 +27,10 @@ class User {
 }
 
 class Document {
-    constructor(docId, name, folder) {
+    constructor(docId, title, author) {
         this.docId = docId;
-        this.name = name;
-        this.folder = folder
+        this.title = title;
+        this.author = author
     }
 }
 

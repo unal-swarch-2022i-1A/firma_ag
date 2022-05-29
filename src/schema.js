@@ -22,9 +22,9 @@ const eschema = buildSchema(`
     }
 
     type Document {
-        docId: Int
-        name: String
-        folder: Int
+        docId: String
+        title: String
+        author: String
     }
 
     type Query {
@@ -35,7 +35,7 @@ const eschema = buildSchema(`
         getUser(id: Int): User
         getUserByEmail(email: String): User
 
-        getDoc(id: Int): Document
+        getDoc(id: String): Document
         
     }
 
@@ -49,6 +49,8 @@ const eschema = buildSchema(`
         deleteUser(id: Int): RestStatus
 
         signData(data: String, userId: String): Signature
+
+        createDoc(title: String, author: String): Document
     }
 `);
 

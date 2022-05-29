@@ -179,8 +179,23 @@ const root = {
         })
         .then(res => res.json())
         .then(data => {
-            return new entity.Document(data.id, data.name, data.folder)//?
+            return new entity.Document(data.id, data.title, data.author);//?
         }) 
+    },
+
+    createDoc: (doc) => {
+        const url = docEndpoint;
+        var data = {"title": doc.title, "author": doc.author}
+        return fetch(url, {
+            "method": "POST",
+            "body": JSON.stringify(data), 
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })
+        .then(res => {
+            return new entity.Document(res.title, res.author);
+        });
     }
 
 };
