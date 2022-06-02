@@ -4,7 +4,7 @@ const FormData = require('form-data');
 // The root provides a resolver function for each API endpoint
 
 const userEndpoint = `http://127.0.0.1:8090/users/`
-const docEndpoint = `http://127.0.0.1:8091/docs/`
+const docEndpoint = `http://127.0.0.1:3000/docs/`
 const keysEndpoint = `http://127.0.0.1:8093/keys/`
 const signEndpoint = `http://127.0.0.1:8095/sign`
 
@@ -179,7 +179,7 @@ const root = {
         })
         .then(res => res.json())
         .then(data => {
-            return new entity.Document(data.id, data.title, data.author);//?
+            return new entity.Document(data._id, data.title, data.author);//?
         }) 
     },
 
@@ -194,7 +194,7 @@ const root = {
             }
         })
         .then(res => {
-            return new entity.Document(res.title, res.author);
+            return new entity.Document(res._id, res.title, res.author);
         });
     }
 
