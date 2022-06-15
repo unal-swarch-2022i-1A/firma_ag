@@ -9,5 +9,5 @@ app.use('/graphql', graphqlHTTP({
   rootValue: root.root,
   graphiql: true,
 }));
-app.listen(4000);
-console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+app.listen(8080);
+console.log('Running a GraphQL API server at http://localhost:8080/graphql');
