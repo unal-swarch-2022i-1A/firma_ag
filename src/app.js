@@ -13,5 +13,5 @@ app.use('/graphql', graphqlHTTP({
 app.listen(port);
 console.log(`Running GraphQL API server (${env.production?"production":"development"}) at http://localhost:${port}/graphql`);
 if (env.development) {
-  console.log("endpoints",endpoints)
+  console.log("API MS endpoints:",endpoints)
 }

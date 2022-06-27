@@ -2,27 +2,19 @@ var fetch = require("node-fetch-commonjs");
 const entity = require('./classes.js');
 const { endpoints } = require('../config');
 const FormData = require('form-data');
+// Services
+const SignService = require('../business/SignService').default;
 // The root provides a resolver function for each API endpoint
-
 const root = {
     hello: () => {
         return 'Hello world!';
       },     
 
-    signData: (signature) => {
-        const url = endpoints.sign;
-        var data = {"signature": signature.signature, "user_id": signature.userId, "data": signature.data}
-        return fetch(url, {
-            "method": "POST",
-            "body": JSON.stringify(data), 
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            return new entity.Signature(data.signature, data.user_Id, data.data)//?
-        }) 
+    signData: async (input) => {
+        console.log("signData: input:",input);
+        const signServiceReponse = SignService.sign(input.userId,input.data);
+        //let sign = new
+        return SignService.sign(input.userId,input.data);
     },
 
     getUser: (id) => {
