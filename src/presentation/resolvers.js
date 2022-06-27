@@ -1,85 +1,16 @@
 var fetch = require("node-fetch-commonjs");
-const entity = require('./classes.js')
+const entity = require('./classes.js');
+const { endpoints } = require('../config');
 const FormData = require('form-data');
 // The root provides a resolver function for each API endpoint
-
-const userEndpoint = `http://127.0.0.1:8090/users/`
-const docEndpoint = `http://127.0.0.1:3000/docs/`
-const keysEndpoint = `http://127.0.0.1:8093/keys/`
-const signEndpoint = `http://127.0.0.1:8095/sign`
-
 
 const root = {
     hello: () => {
         return 'Hello world!';
-      },
-     
-    getPrivateKey: (id) => {
-        const url = keysEndpoint + `${id.id}/private`;
-        return fetch(url, {
-            "method": "GET",
-            "headers": {
-                "Content-Type": "application/json"
-            }
-            
-        })
-        .then(res => res.text())
-    },
-
-    getPublicKey: (id) => {
-        const url = keysEndpoint + `${id.id}/public`;
-        return fetch(url, {
-            "method": "GET",
-            "headers": {
-                "Content-Type": "application/json"
-            }
-            
-        })
-        .then(res => res.text())
-    },
-
-    generateUserKeys: (id) => {
-        const url = keysEndpoint + `${id.id}`;
-        return fetch(url, {
-            "method": "POST",
-            "headers": {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(res => {
-            return new entity.RestStatus(res.status, res.statusText);
-        });
-        
-    },
-
-    reGenerateUserKeys: (id) => {
-        const url = keysEndpoint + `${id.id}`;
-        return fetch(url, {
-            "method": "PUT",
-            "headers": {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(res => {
-            return new entity.RestStatus(res.status, res.statusText);
-        });        
-    },
-
-    deleteUserKeys: (id) => {
-        const url = keysEndpoint + `${id.id}`;
-        return fetch(url, {
-            "method": "DELETE",
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => {
-            return new entity.RestStatus(res.status, res.statusText);
-        });        
-    },
+      },     
 
     signData: (signature) => {
-        const url = signEndpoint;
+        const url = endpoints.sign;
         var data = {"signature": signature.signature, "user_id": signature.userId, "data": signature.data}
         return fetch(url, {
             "method": "POST",
@@ -95,7 +26,7 @@ const root = {
     },
 
     getUser: (id) => {
-        const url = userEndpoint + `${id.id}`;
+        const url = endpoints.user + `${id.id}`;
         return fetch(url, {
             "method": "GET", 
             "headers": {
@@ -126,7 +57,7 @@ const root = {
     },
 
     createUser: (user) => {
-        const url = userEndpoint;
+        const url = endpoints.user;
         var data = {"firstName": user.firstName, "lastName": user.lastName, "email": user.email, "password": user.password}
         return fetch(url, {
             "method": "POST",
@@ -141,7 +72,7 @@ const root = {
     },
 
     updateUser: (user) => {
-        const url = userEndpoint + `${user.id}`;
+        const url = endpoints.user + `${user.id}`;
         var data = {"firstName": user.firstName, "lastName": user.lastName, "email": user.email, "password": user.password}
         return fetch(url, {
             "method": "PUT",
@@ -157,7 +88,7 @@ const root = {
     },
 
     deleteUser: (id) => {
-        const url = userEndpoint + `${id.id}`;
+        const url = endpoints.user + `${id.id}`;
         return fetch(url, {
             "method": "DELETE",
             "headers": {
@@ -170,7 +101,7 @@ const root = {
     },
 
     getDoc: (id) => {
-        const url = docEndpoint + `${id.id}`;
+        const url = endpoints.doc + `${id.id}`;
         return fetch(url, {
             "method": "GET",
             "headers": {
@@ -184,7 +115,7 @@ const root = {
     },
 
     createDoc: (doc) => {
-        const url = docEndpoint;
+        const url = endpoints.doc;
         var data = {"title": doc.title, "author": doc.author}
         return fetch(url, {
             "method": "POST",

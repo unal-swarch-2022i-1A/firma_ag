@@ -1,7 +1,7 @@
 var { buildSchema } = require('graphql');
 
 //Construct a schema, using GraphQL schema language
-const eschema = buildSchema(`
+const schema = buildSchema(`
     type Signature {
         signature: String
         userId: String
@@ -40,9 +40,6 @@ const eschema = buildSchema(`
     }
 
     type Mutation {
-        generateUserKeys(id: Int): RestStatus
-        reGenerateUserKeys(id: Int): RestStatus
-        deleteUserKeys(id: Int): RestStatus
 
         createUser(firstName: String, lastName: String, email: String, password: String): RestStatus
         updateUser(id: Int, firstName: String, lastName: String, email: String, password: String): User
@@ -54,4 +51,4 @@ const eschema = buildSchema(`
     }
 `);
 
-exports.eschema = eschema;
+exports.schema = schema;

@@ -1,6 +1,3 @@
-class Key {
-
-}
 class RestStatus{
     constructor(code, message){
         this.httpCode = code;
