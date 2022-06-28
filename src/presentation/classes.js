@@ -1,5 +1,3 @@
-const User = require('../application/user/UserResponse').default
-
 class RestStatus{
     constructor(code, message){
         this.httpCode = code;
@@ -16,5 +14,4 @@ class Document {
 }
 
 exports.RestStatus = RestStatus;
-//exports.User = User;
 exports.Document = Document;

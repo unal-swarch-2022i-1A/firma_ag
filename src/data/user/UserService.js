@@ -21,6 +21,20 @@ class UserService {
         console.log("UserService: json:",json);
         return new getserDto(json);
     }    
+
+    static async createUser(firstName,lastName,email,password){
+        const url = endpoints.user;
+        const data = {"firstName": firstName, "lastName": lastName, "email": email, "password": password}
+        const response = await fetch(url, {
+            "method": "POST",
+            "body": JSON.stringify(data), 
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        })         
+        console.log("UserService: response:",{httpCode:response.status, httpMessage:response.statusText});  
+        return {httpCode:response.status, httpMessage:response.statusText};
+    }
 }
 
 exports.default = UserService

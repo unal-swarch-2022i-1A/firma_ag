@@ -21,7 +21,7 @@ curl --location --request GET 'http://host.docker.internal:8092/test'
 curl --location --request POST 'http://host.docker.internal:8092/sign' --header 'Content-Type: application/json' --header 'Accept: application/json' --data-raw '{ "data": "hola mundo!", "user_id": "1" }'
 ```
 
-#### Query
+#### Sign
 ```graphql
 query {
   signData(
@@ -36,7 +36,7 @@ query {
 ```
 
 ### User
-#### Query
+#### Get
 ```graphql
 query {
   getUser(id:1) {
@@ -45,6 +45,20 @@ query {
     lastName,
     email,
     password
+  }
+}
+```
+#### Create
+```graphql
+mutation {
+  createUser (
+    email: "kpassfield0@cocolog-nifty.com",
+    firstName: "Korry",
+    lastName: "Passfield",
+    password: "mP9B1mSca"    
+  ) {
+    httpCode,
+    httpMessage
   }
 }
 ```

@@ -5,7 +5,7 @@ var fetch = require("node-fetch-commonjs");
 // Response models:
 const entity = require('./classes.js');
 // Controllers
-const SignController = require('../application/sign/SignController').default;
+const SignController = require('./application/sign/SignController').default;
 
 /**
  * The root provides a resolver function for each API endpoint

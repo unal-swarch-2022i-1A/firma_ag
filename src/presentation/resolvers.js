@@ -19,16 +19,19 @@ const root = {
 
     signData: SignController.sign,
 
+    //verifyData: VerificationController.verify,
+
     getUser: UserController.getUser,
 
-    getUserByEmail: UserController.test,
+    getUserByEmail: UserController.getUserByEmail,
 
-    createUser: UserController.test,
+    createUser: UserController.createUser,
 
-    updateUser: UserController.test,
+    updateUser: UserController.updateUser,
 
-    deleteUser: UserController.test,
-
+    deleteUser: UserController.deleteUser,
+    
+    // Docs
 };
 
 exports.root = root;

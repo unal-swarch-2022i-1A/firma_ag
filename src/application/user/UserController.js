@@ -1,5 +1,6 @@
 const UserService = require('../../data/user/UserService').default;
 const UserMapper = require('./UserMapper');
+const httpMapper = require('../http/HttpMapper');
 class UserController {
     /**
      * 
@@ -13,18 +14,53 @@ class UserController {
         return UserMapper.mapUserResponse(userServiceResponse);
     }
 
-    static async test() {
-        return "User";
+    /**
+     * TODO
+     * @param {*} param0 
+     * @returns 
+     */
+    static async getUserByEmail({email}) {
+        console.log("UserController: getUserByEmail ",{email});
+        const userServiceResponse = await UserService.getUser(1);
+        console.log("UserController: userServiceResponse ",userServiceResponse);
+        return UserMapper.mapUserResponse(userServiceResponse);
+    }    
+    
+    /**
+     * TODO
+     * @param {*} param0 
+     * @returns 
+     */
+    static async createUser({firstName,lastName,email,password}) {
+        console.log("UserController: createUser ",{firstName,lastName,email,password});        
+        const httpServiceResponse = await UserService.createUser(firstName,lastName,email,password);
+        console.log("UserController: httpServiceResponse ",httpServiceResponse);
+        return httpMapper.mapHttpResponse(httpServiceResponse);
     }
 
-    /*
-    TODO:
-    getUser
-    getUserByEmail
-    createUser
-    updateUser
-    deleteUser
-    */
+    /**
+     * TODO
+     * @param {*} param0 
+     * @returns 
+     */
+    static async updateUser({firstName,lastName,email,password}) {
+        console.log("UserController: updateUser ",{firstName,lastName,email,password});        
+        const userServiceResponse = await UserService.getUser(id);
+        console.log("UserController: userServiceResponse ",userServiceResponse);
+        return UserMapper.mapUserResponse(userServiceResponse);
+    }
+
+    /**
+     * TODO
+     * @param {*} param0 
+     * @returns 
+     */
+    static async deleteUser({id}) {
+        console.log("UserController: deleteUser ",{id});
+        const userServiceResponse = await UserService.getUser(id);
+        console.log("UserController: userServiceResponse ",userServiceResponse);
+        return UserMapper.mapUserResponse(userServiceResponse);
+    }
 }
 
 exports.default = UserController;
