@@ -28,24 +28,24 @@ const schema = buildSchema(`
     }
 
     type Query {
-        getPrivateKey(id: Int): String
-        getPublicKey(id: Int): String
         hello: String
 
         getUser(id: Int): User
         getUserByEmail(email: String): User
 
+        signData(userId: String, data: String): Signature
+        
         getDoc(id: String): Document
         
     }
 
     type Mutation {
-
+        
         createUser(firstName: String, lastName: String, email: String, password: String): RestStatus
         updateUser(id: Int, firstName: String, lastName: String, email: String, password: String): User
         deleteUser(id: Int): RestStatus
 
-        signData(userId: String, data: String): Signature
+        
 
         createDoc(title: String, author: String): Document
     }

@@ -1,125 +1,33 @@
-var fetch = require("node-fetch-commonjs");
-const entity = require('./classes.js');
+// App
 const { endpoints } = require('../config');
-const FormData = require('form-data');
-// Services
-const SignService = require('../business/SignService').default;
-// The root provides a resolver function for each API endpoint
+// Modules
+var fetch = require("node-fetch-commonjs");
+// Response models:
+//const entity = require('./classes.js');
+// Controllers
+const SignController = require('../application/sign/SignController').default;
+const UserController = require('../application/user/UserController').default;
+
+
+/**
+ * The root provides a resolver function for each API endpoint
+ */
 const root = {
     hello: () => {
         return 'Hello world!';
       },     
 
-    signData: async (input) => {
-        console.log("signData: input:",input);
-        const signServiceReponse = SignService.sign(input.userId,input.data);
-        //let sign = new
-        return SignService.sign(input.userId,input.data);
-    },
+    signData: SignController.sign,
 
-    getUser: (id) => {
-        const url = endpoints.user + `${id.id}`;
-        return fetch(url, {
-            "method": "GET", 
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            return new entity.User(data.userId, data.firstName, data.lastName, data.email, data.password)//?
-        }) 
-    },
+    getUser: UserController.getUser,
 
-    getUserByEmail: (email) => {
-        const url = `http://127.0.0.1:8090/users/user`;
-        console.log(url)
-        var data = {"email": email.email}
-        return fetch(url, {
-            "method": "POST", 
-            "body": JSON.stringify(data), 
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            return new entity.User(data.userId, data.firstName, data.lastName, data.email, data.password)//?
-        }) 
-    },
+    getUserByEmail: UserController.test,
 
-    createUser: (user) => {
-        const url = endpoints.user;
-        var data = {"firstName": user.firstName, "lastName": user.lastName, "email": user.email, "password": user.password}
-        return fetch(url, {
-            "method": "POST",
-            "body": JSON.stringify(data), 
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => {
-            return new entity.RestStatus(res.status, res.statusText);
-        });
-    },
+    createUser: UserController.test,
 
-    updateUser: (user) => {
-        const url = endpoints.user + `${user.id}`;
-        var data = {"firstName": user.firstName, "lastName": user.lastName, "email": user.email, "password": user.password}
-        return fetch(url, {
-            "method": "PUT",
-            "body": JSON.stringify(data), 
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            return new entity.User(data.userId, data.firstName, data.lastName, data.email, data.passord)//?
-        }) 
-    },
+    updateUser: UserController.test,
 
-    deleteUser: (id) => {
-        const url = endpoints.user + `${id.id}`;
-        return fetch(url, {
-            "method": "DELETE",
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => {
-            return new entity.RestStatus(res.status, res.statusText);
-        });
-    },
-
-    getDoc: (id) => {
-        const url = endpoints.doc + `${id.id}`;
-        return fetch(url, {
-            "method": "GET",
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            return new entity.Document(data._id, data.title, data.author);//?
-        }) 
-    },
-
-    createDoc: (doc) => {
-        const url = endpoints.doc;
-        var data = {"title": doc.title, "author": doc.author}
-        return fetch(url, {
-            "method": "POST",
-            "body": JSON.stringify(data), 
-            "headers": {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then(res => {
-            return new entity.Document(res._id, res.title, res.author);
-        });
-    }
+    deleteUser: UserController.test,
 
 };
 

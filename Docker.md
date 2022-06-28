@@ -9,14 +9,14 @@ docker run -it -d \
     --name firma_ag_dev \
     -v $(pwd)/src:/usr/src/app/src \
     -v $(pwd)/.env:/usr/src/app/.env \
-    -p 3000:3000 \
+    -p 3080:3080 \
     --add-host=host.docker.internal:host-gateway \
     firma_ag:dev \
     && \
 docker logs --tail 1000 -f 'firma_ag_dev'
 docker exec -it 'firma_ag_dev' /bin/bash    
 ```
-### Producción
+### Producción "Local"
 ```bash
 docker build -t 'firma_ag' .
 docker rm -f 'firma_ag' && \

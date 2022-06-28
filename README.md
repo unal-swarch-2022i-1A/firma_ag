@@ -16,12 +16,14 @@ http://localhost:3000/graphql
 #### Curl dentro del contenedor
 A http://host.docker.internal:8092/sign/
 ```bash
+ping host.docker.internal
+curl --location --request GET 'http://host.docker.internal:8092/test'
 curl --location --request POST 'http://host.docker.internal:8092/sign' --header 'Content-Type: application/json' --header 'Accept: application/json' --data-raw '{ "data": "hola mundo!", "user_id": "1" }'
 ```
 
 #### Query
 ```graphql
-mutation {
+query {
   signData(
     userId: "1",
     data: "Hola mundo",
@@ -29,6 +31,20 @@ mutation {
     signature,
     userId,
     data
+  }
+}
+```
+
+### User
+#### Query
+```graphql
+query {
+  getUser(id:1) {
+    userId,
+    firstName,
+    lastName,
+    email,
+    password
   }
 }
 ```
