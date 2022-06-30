@@ -48,9 +48,17 @@ query {
   }
 }
 ```
+```bash
+curl 'http://localhost:'$PORT/ \
+-v \
+-X POST \
+-H 'content-type: application/json' \
+--data '{"query":"{ getUser( id: 1 ) { userId, firstName }}"}'
+```
 **Get by email**
 ```bash
-curl 'http://localhost:3080/' \
+PORT=8080
+curl 'http://localhost:'$PORT/ \
 -v \
 -X POST \
 -H 'content-type: application/json' \
