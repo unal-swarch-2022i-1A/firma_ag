@@ -49,22 +49,21 @@ query {
 }
 ```
 **Get by email**
+```bash
+curl 'http://localhost:3080/' \
+-v \
+-X POST \
+-H 'content-type: application/json' \
+--data '{"query":"{ getUserByEmail( email: \"kpassfield0@cocolog-nifty.com\" ) { userId, firstName }}"}'
+```
 ```graphql
-query {
-  getUserByEmail(email:"kpassfield0@cocolog-nifty.com") {
-    userId,
-    firstName,
-    lastName,
-    email,
-    password
-  }
-}
+
 ```
 **Create**
 ```graphql
 mutation {
   createUser (
-    email: "kpassfield0@cocolog-nifty.com",
+    email: "kpassfield0@1cocolog-nifty.com",
     firstName: "Korry",
     lastName: "Passfield",
     password: "mP9B1mSca"    
@@ -73,4 +72,23 @@ mutation {
     httpMessage
   }
 }
+```
+```bash
+curl 'http://localhost:3080/' \
+-v \
+-X POST \
+-H 'content-type: application/json' \
+--data '{
+  "query":"mutation {
+    createUser (
+      email: \"kpassfield0@'$RANDOM'\",
+      firstName: \"Korry\",
+      lastName: \"Passfield\",
+      password: \"mP9B1mSca\"    
+    ) {
+      httpCode,
+      httpMessage
+    }
+  }"
+}'
 ```
