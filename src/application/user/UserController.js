@@ -11,7 +11,10 @@ class UserController {
         console.log("UserController: getUser ",{id});
         const userServiceResponse = await UserService.getUser(id);
         console.log("UserController: userServiceResponse ",userServiceResponse);
-        return UserMapper.mapUserResponse(userServiceResponse);
+        if (userServiceResponse) 
+            return UserMapper.mapUserResponse(userServiceResponse);
+        else 
+            return null;
     }
 
     /**

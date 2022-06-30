@@ -1,5 +1,5 @@
 var fetch = require("node-fetch-commonjs");
-const getserDto = require('./getUserDto').default;
+const getUserDto = require('./getUserDto').default;
 const { endpoints } = require('../../config');
 
 class UserService {
@@ -10,6 +10,7 @@ class UserService {
      * @returns 
      */
     static async getUser(id){
+        console.log(`UserService: getUser(${id})...`);
         const url = endpoints.user + `${id}`;
         const response = await fetch(url, {
             "method": "GET", 
@@ -17,9 +18,15 @@ class UserService {
                 "Content-Type": "application/json; charset=utf-8"
             }
         });
-        const json = await response.json();
-        console.log("UserService: json:",json);
-        return new getserDto(json);
+        console.log("(...) http status: ",response.status);
+        switch(response.status) {
+            case 200:
+              const json = await response.json();
+              console.log("...json:",json);              
+              return new getUserDto(json);
+            default:
+              return null;
+          }               
     }    
 
     static async createUser(firstName,lastName,email,password){
