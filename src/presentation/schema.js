@@ -44,9 +44,7 @@ const schema = buildSchema(`
         createUser(firstName: String, lastName: String, email: String, password: String): RestStatus
         updateUser(id: Int, firstName: String, lastName: String, email: String, password: String): User
         deleteUser(id: Int): RestStatus
-
         
-
         createDoc(title: String, author: String): Document
     }
 `);

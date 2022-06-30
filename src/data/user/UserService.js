@@ -29,6 +29,31 @@ class UserService {
           }               
     }    
 
+    /**
+     * 
+     * @param {string} email 
+     * @returns 
+     */
+     static async getUserByEmail(email){
+        console.log(`UserService: getUser(${email})...`);
+        const url = endpoints.user + `?email=${email}`;
+        const response = await fetch(url, {
+            "method": "GET", 
+            "headers": {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        });
+        console.log("(...) http status: ",response.status);
+        switch(response.status) {
+            case 200:
+              const json = await response.json();
+              console.log("...json:",json);              
+              return new getUserDto(json);
+            default:
+              return null;
+          }               
+    }       
+
     static async createUser(firstName,lastName,email,password){
         const url = endpoints.user;
         const data = {"firstName": firstName, "lastName": lastName, "email": email, "password": password}

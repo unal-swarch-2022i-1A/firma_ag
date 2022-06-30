@@ -4,7 +4,7 @@ const httpMapper = require('../http/HttpMapper');
 class UserController {
     /**
      * 
-     * @param {*} {id}     
+     * @param {{int}} {id}     
      * @returns {UserResponse}
      */
     static async getUser({id}) {
@@ -19,14 +19,17 @@ class UserController {
 
     /**
      * TODO
-     * @param {*} param0 
+     * @param {{string}} {email} 
      * @returns 
      */
     static async getUserByEmail({email}) {
         console.log("UserController: getUserByEmail ",{email});
-        const userServiceResponse = await UserService.getUser(1);
+        const userServiceResponse = await UserService.getUserByEmail(email);
         console.log("UserController: userServiceResponse ",userServiceResponse);
-        return UserMapper.mapUserResponse(userServiceResponse);
+        if (userServiceResponse) 
+            return UserMapper.mapUserResponse(userServiceResponse);
+        else 
+            return null;
     }    
     
     /**

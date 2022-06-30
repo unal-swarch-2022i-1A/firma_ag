@@ -36,7 +36,7 @@ query {
 ```
 
 ### User
-#### Get
+**Get by ID**
 ```graphql
 query {
   getUser(id:1) {
@@ -48,7 +48,19 @@ query {
   }
 }
 ```
-#### Create
+**Get by email**
+```graphql
+query {
+  getUserByEmail(email:"kpassfield0@cocolog-nifty.com") {
+    userId,
+    firstName,
+    lastName,
+    email,
+    password
+  }
+}
+```
+**Create**
 ```graphql
 mutation {
   createUser (
